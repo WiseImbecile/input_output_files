@@ -157,7 +157,6 @@ public class Lab8{
                 for(int i = 0; i < preserve_array.length; i++){
                     preserve_array[i] = scnr2.nextLine();
                 }
-
             }
         }
         
