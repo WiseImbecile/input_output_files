@@ -109,7 +109,8 @@ public class Lab8{
     public static void java_brace_conversion(File file){
 
         int count = 0;
-        String array [];
+        String modified_array [];
+        String preserve_array [];
         try{
             file.canExecute();
         }
@@ -124,8 +125,8 @@ public class Lab8{
         try{
             scnr = new Scanner(file);
             //getting size needed for array from the count
-            while(scnr.hasNext()){
-                scnr.next();
+            while(scnr.hasNextLine()){
+                scnr.nextLine();
                 count++;
             }
 
@@ -140,22 +141,52 @@ public class Lab8{
                 scnr.close();
             }
         }
+
+
         //initializing array to size count
-        array = new String[count];
-        //opening 2nd scanner
+        preserve_array = new String[count];
+        //new scanner
         Scanner scnr2 = null;
+
+        try{
+            //initializing scanner with file
+            scnr2 = new Scanner(file);
+            //reading file and putting into array to preserve
+            while(scnr2.hasNextLine()){
+                for(int i = 0; i < preserve_array.length; i++){
+                    preserve_array[i] = scnr2.nextLine();
+                }
+
+            }
+        }
+        
+        catch(FileNotFoundException a){
+            System.out.print("File is not Found!");
+        }
+
+        finally{
+            if(scnr2 != null){
+                scnr2.close();
+            }
+        }
+        //start of modifying array
+        modified_array = new String[count];
+        //opening 3rd scanner
+        Scanner scnr3 = null;
         String curly_brace = "{";
 
         try{
-            scnr2 = new Scanner(file);
+            scnr3 = new Scanner(file);
 
-            while(scnr2.hasNext()){
-                for(int i = 0; i < array.length; i++){
-                    array[i] = scnr2.next();
-                    if(array[i].equals(curly_brace)){
+            while(scnr3.hasNextLine()){
+                for(int i = 0; i < modified_array.length; i++){
+                    modified_array[i] = scnr3.nextLine();
+                    if(modified_array[i].contains(curly_brace)){
+                        //getting rid of any unwanted beginning spaces
+                        modified_array[i] = " {";
                         //once curly brace is found, add it to previous element in array and set present to null
-                        array[i-1] += array[i];
-                        array[i] = null;
+                        modified_array[i-1] += modified_array[i];
+                        modified_array[i] = "";
                     }
 
                 }
@@ -171,20 +202,56 @@ public class Lab8{
         }
 
         finally{
-            if(scnr2 != null){
-                scnr2.close();
+            if(scnr3 != null){
+                scnr3.close();
             }
         }
 
-        for(int i = 0; i < array.length;i++){
-            System.out.print(array[i] + " ");
+        //modified file creation**
+        //File path
+        File file_path = new File("ClassName.java");
+        PrintWriter class_name = null;
+        try{
+            //Create new file
+            class_name = new PrintWriter(file_path);
+            //print array to file
+            for(int i = 0; i < modified_array.length; i++){
+                class_name.println(modified_array[i]);
+            }
         }
 
+        //handle that exception fool
+        catch(FileNotFoundException b){
+            System.out.print("File is not Found!");
+        }
+        finally{
+            if(class_name != null){
+                class_name.close();
+            }
+        }
 
+        //preserved file creation**
+        //File path
+        File file_path2 = new File("ClassName_newlinebraces.java");
+        PrintWriter preserve_file = null;
+        try{
+            //create new file
+            preserve_file = new PrintWriter(file_path2);
+            //print array to file
+            for(String word : preserve_array){
+                preserve_file.println(word);
+            }
+        }
 
+        catch(FileNotFoundException z){
+            System.out.print("File is not Found");
+        }
 
-
-
+        finally{
+            if(preserve_file != null){
+                preserve_file.close();
+            }
+        }
     }
     //main
     public static void main(String[] args) {
