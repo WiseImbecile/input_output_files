@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 
-/**This program takes in an in.txt file and calculates the sum of every integer and the sum of every double
+/**This program takes in an in.txt file and calculates the sum of every integer and the sum of every double. The second function is converting java code to end-of-line brace style.
  * and creates and inserts each sum into it's own .txt file.
  * @author: Samuel Reynebeau
  * @date: 11/14/24
@@ -105,7 +105,10 @@ public class Lab8{
     }
 
 
-
+    /**
+     * 
+     * @param file file object
+     */
     public static void java_brace_conversion(File file){
 
         int count = 0;
@@ -129,7 +132,6 @@ public class Lab8{
                 scnr.nextLine();
                 count++;
             }
-
         }
         
         catch(FileNotFoundException e){
@@ -141,7 +143,6 @@ public class Lab8{
                 scnr.close();
             }
         }
-
 
         //initializing array to size count
         preserve_array = new String[count];
@@ -188,13 +189,8 @@ public class Lab8{
                         modified_array[i-1] += modified_array[i];
                         modified_array[i] = "";
                     }
-
                 }
-
-
             }
-
-
         }
 
         catch(FileNotFoundException f){
@@ -274,8 +270,5 @@ public class Lab8{
         File file2 = new File("ClassName.java");
 
         java_brace_conversion(file2);
-
-
-
     }
 }

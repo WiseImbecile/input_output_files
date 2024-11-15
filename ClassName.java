@@ -1,7 +1,7 @@
-public class ClassName {
-
-    public static void main(String[] args) {
-
+public class ClassName
+{
+    public static void main(String[] args)
+    {
         //Some Statements
     }
 }
