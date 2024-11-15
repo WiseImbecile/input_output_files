@@ -19,7 +19,7 @@ public class Lab8{
         int int_num = 0;
         double double_num = 0.0;
         double double_sum = 0.0;
-        
+
         //checking to make sure file will open
         try{
             file.canExecute();
@@ -52,9 +52,6 @@ public class Lab8{
                     catch(InputMismatchException d){
                         scnr.next();
                     }
-
-
-                    //scnr.next();
                 }
             }  
         }
@@ -105,14 +102,93 @@ public class Lab8{
                 create_file_double.close();
             }
         }
-
-
-
-       // return integer_sum;
     }
 
+
+
+    public static void java_brace_conversion(File file){
+
+        int count = 0;
+        String array [];
+        try{
+            file.canExecute();
+        }
+        catch(SecurityException s){
+            System.out.println("File can not open!!");
+        }
+
+        //scanner to null
+        Scanner scnr = null; 
+        
+        //creating scanner object and reading file
+        try{
+            scnr = new Scanner(file);
+            //getting size needed for array from the count
+            while(scnr.hasNext()){
+                scnr.next();
+                count++;
+            }
+
+        }
+        
+        catch(FileNotFoundException e){
+            System.out.println("File is not Found!");
+        }
+        
+        finally{
+            if(scnr != null){
+                scnr.close();
+            }
+        }
+        //initializing array to size count
+        array = new String[count];
+        //opening 2nd scanner
+        Scanner scnr2 = null;
+        String curly_brace = "{";
+
+        try{
+            scnr2 = new Scanner(file);
+
+            while(scnr2.hasNext()){
+                for(int i = 0; i < array.length; i++){
+                    array[i] = scnr2.next();
+                    if(array[i].equals(curly_brace)){
+                        //once curly brace is found, add it to previous element in array and set present to null
+                        array[i-1] += array[i];
+                        array[i] = null;
+                    }
+
+                }
+
+
+            }
+
+
+        }
+
+        catch(FileNotFoundException f){
+            System.out.print("File not Found!");
+        }
+
+        finally{
+            if(scnr2 != null){
+                scnr2.close();
+            }
+        }
+
+        for(int i = 0; i < array.length;i++){
+            System.out.print(array[i] + " ");
+        }
+
+
+
+
+
+
+    }
     //main
     public static void main(String[] args) {
+        //testing 1st program**
         File file = new File("in.txt");
         //calling method
         create_sum_file(file);
@@ -126,5 +202,13 @@ public class Lab8{
         if(int_file.exists() && double_file.exists()){
             System.out.println("Eureka!! It works!! It's time to party!!");
         }
+
+        //testing 2nd program**
+        File file2 = new File("ClassName.java");
+
+        java_brace_conversion(file2);
+
+
+
     }
 }
